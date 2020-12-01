@@ -1,7 +1,7 @@
 require_relative 'station'
 
 class Oystercard # class (Object)
-  attr_accessor :balance, :capacity, :minimum_fare, :start_station, :exit_station, :num_of_journeys # when we need to change variables attr accessor allows us both read and write instance variables without using def name @name end (reader) and def name=(str) @name = str end (writer)
+  attr_accessor :balance, :capacity, :minimum_fare, :start_station, :exit_station, :num_of_journeys, :journeys # when we need to change variables attr accessor allows us both read and write instance variables without using def name @name end (reader) and def name=(str) @name = str end (writer)
 
 
   DEFAULT_CAPACITY = 90 # constant is like a variable except its value is supposed to remain constant for the duration of the program (allows it to be changed for different users i.e different capacity/different prices etc)
@@ -14,7 +14,7 @@ class Oystercard # class (Object)
     @minimum_fare = MINIMUM_FARE  #sets the minimum_fare to the value of the MINIMUM_FARE constant
     @start_station = ""
     @exit_station = ""
-    @journeys = {}
+    @journey = []
     @num_of_journeys = 0
   end
 
@@ -30,19 +30,29 @@ class Oystercard # class (Object)
    def touch_in(station) #method with the argument of station 
     fail "Not enough funds" if @balance < 1 # fail if balance is below one (as it is lower than minimum fair)
     @start_station = station #start station is equal to the station we touch_in at 
-
+    @journey << @start_station
   end
 
   def touch_out(station) #method of touch_out
     deduct(@minimum_fare) #deducts the minimum fare from the balance when touch_out is called
-    @exit_station = station
-    @num_of_journeys +=1
-
-    
+    @exit_station = station 
+    @journey << @exit_station
   end
+
   def history_of_journeys
-    journey = @journeys[@num_of_journeys] = [@start_station]
-    journey = @journeys[@num_of_journeys].push(@exit_station)
+    journey_array = []
+    # journey_array << @journeys 
+    journey_array[num_of_journeys] = @journey
+    @num_of_journeys += 1
+    return journey_array.each_slice(2)
+    # journey = [@start_station, @exit_station]
+    # journey_array << journey
+    # hash = Hash.new()
+    # journey_array.each do |journey|
+    # hash[num_of_journeys] = @journey
+    # @num_of_journeys +=1
+    # end
+    # return hash
   end
 
   def in_journey? #method of in_journey

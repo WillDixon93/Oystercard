@@ -6,6 +6,7 @@ describe Oystercard do
   let(:station) { double :station }
   let(:start_station) {double :start_station}
   let(:exit_station) {double :exit_station}
+  
 
   it 'responds to balance' do
     expect(subject).to respond_to(:balance) #expects oystercard to respond to balance
@@ -80,6 +81,7 @@ describe Oystercard do
     #   subject.touch_out(station)
     #   expect(subject.touch_out(station)).not_to be_empty
     # end
+
     it 'remembers the station' do
       subject.touch_out(station) # oystercard.touch_out(to station)
       expect(subject.exit_station).to eq station  # expect subject.exit_station to equal station
@@ -99,15 +101,16 @@ describe Oystercard do
   end
   describe '#history_of_journeys' do
     it "returns an empty list of journeys by default" do
-      p subject.history_of_journeys
-      expect(subject.history_of_journeys).to be_empty
+      p subject.journey
+      expect(subject.journey).to be_empty
     end
   
     it "returns an array with list of journey" do
       subject.top_up(10)
       subject.touch_in(start_station)
       subject.touch_out(exit_station)
-      expect(subject.history_of_journeys.is_a?(Array)).to be_truthy
+      # expect(subject.history_of_journeys.is_a?(Array)).to be_truthy
+      expect(subject.journeys).to include journey
     end
   end
 end

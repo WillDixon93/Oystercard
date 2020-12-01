@@ -7,5 +7,5 @@ oc.touch_in("holborn")
 oc.touch_out("chancery lane")
 oc.history_of_journeys
 oc.touch_in("notting hill")
-oc.touch_out("chancery lane")
+oc.touch_out("bethnal green")
 print oc.history_of_journeys
