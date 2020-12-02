@@ -101,8 +101,8 @@ describe Oystercard do
   end
   describe '#history_of_journeys' do
     it "returns an empty list of journeys by default" do
-      p subject.journey
-      expect(subject.journey).to be_empty
+      p subject.journeys
+      expect(subject.journeys).to be_empty
     end
   
     it "returns an array with list of journey" do
@@ -110,7 +110,7 @@ describe Oystercard do
       subject.touch_in(start_station)
       subject.touch_out(exit_station)
       # expect(subject.history_of_journeys.is_a?(Array)).to be_truthy
-      expect(subject.journeys).to include journey
+      expect(subject.journeys).to eq [[start_station, exit_station]]
     end
   end
 end
